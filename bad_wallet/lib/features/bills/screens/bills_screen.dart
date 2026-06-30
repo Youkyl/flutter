@@ -6,7 +6,7 @@ import 'bills_detail_screen.dart';
 class ServiceInfo {
   final String name;
   final String label;
-  final IconData icon;
+  final FaIconData icon;
   final Color color;
 
   const ServiceInfo({

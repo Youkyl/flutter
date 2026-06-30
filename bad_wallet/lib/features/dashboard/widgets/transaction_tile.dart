@@ -21,7 +21,7 @@ class TransactionTile extends StatelessWidget {
     return '${transaction.isDebit ? '-' : '+'}${formatter.format(transaction.amount)}';
   }
 
-  IconData get _icon {
+  FaIconData get _icon {
     switch (transaction.type) {
       case 'TRANSFER':
         return FontAwesomeIcons.paperPlane;
