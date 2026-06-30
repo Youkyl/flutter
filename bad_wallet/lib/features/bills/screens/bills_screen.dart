@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/theme/app_theme.dart';
 import 'bills_detail_screen.dart';
 
 class ServiceInfo {
   final String name;
   final String label;
-  final IconData icon;
+  final FaIconData icon;
   final Color color;
 
   const ServiceInfo({
@@ -20,26 +21,26 @@ const _services = [
   ServiceInfo(
     name: 'SENELEC',
     label: 'Electricité',
-    icon: Icons.bolt,
-    color: Color(0xFFF59E0B),
+    icon: FontAwesomeIcons.bolt,
+    color: AppTheme.senelecColor,
   ),
   ServiceInfo(
     name: 'WOYAFAL',
     label: 'Gaz',
-    icon: Icons.local_fire_department,
-    color: Color(0xFF3B82F6),
+    icon: FontAwesomeIcons.fire,
+    color: AppTheme.woyafalColor,
   ),
   ServiceInfo(
     name: 'ISM',
     label: 'Scolarité',
-    icon: Icons.school,
-    color: Color(0xFF10B981),
+    icon: FontAwesomeIcons.graduationCap,
+    color: AppTheme.ismColor,
   ),
   ServiceInfo(
     name: 'RAPIDO',
     label: 'Transport',
-    icon: Icons.directions_car,
-    color: Color(0xFFF97316),
+    icon: FontAwesomeIcons.car,
+    color: AppTheme.rapidoColor,
   ),
 ];
 
@@ -122,7 +123,7 @@ class _ServiceCard extends StatelessWidget {
                 color: service.color.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: Icon(service.icon, color: service.color, size: 26),
+              child: FaIcon(service.icon, color: service.color, size: 22),
             ),
             const SizedBox(height: 12),
             Text(

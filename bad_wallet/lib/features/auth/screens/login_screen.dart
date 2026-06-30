@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../../dashboard/screens/dashboard_screen.dart';
@@ -26,7 +27,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
-    await context.read<AuthProvider>().savePhone('+221${_phoneController.text.trim()}');
+    await context
+        .read<AuthProvider>()
+        .savePhone('+221${_phoneController.text.trim()}');
     if (!mounted) return;
     setState(() => _isLoading = false);
     Navigator.pushReplacement(
@@ -38,36 +41,77 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 48),
-                const Icon(
-                  Icons.account_balance_wallet,
-                  size: 56,
-                  color: AppTheme.primary,
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Bienvenue sur BadWallet',
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.textPrimary,
+
+                // Logo
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppTheme.primary, AppTheme.primaryDark],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.primary.withValues(alpha: 0.35),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
                       ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.wallet,
+                      color: Colors.white,
+                      size: 26,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Entrez votre numéro de téléphone pour continuer',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppTheme.textSecondary,
-                      ),
+                const SizedBox(height: 32),
+
+                const Text(
+                  'Bienvenue',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                const Text(
+                  'Entrez votre numéro pour accéder\nà votre portefeuille',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: AppTheme.textSecondary,
+                    height: 1.5,
+                  ),
                 ),
                 const SizedBox(height: 40),
+
+                // Label
+                const Text(
+                  'Numéro de téléphone',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // Champ téléphone
                 TextFormField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
@@ -75,12 +119,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(9),
                   ],
-                  decoration: const InputDecoration(
-                    labelText: 'Numéro de téléphone',
-                    prefixText: '+221 ',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.phone),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.textPrimary,
+                    letterSpacing: 1.5,
+                  ),
+                  decoration: InputDecoration(
                     hintText: '7X XXX XX XX',
+                    prefixIcon: Container(
+                      margin: const EdgeInsets.only(left: 14, right: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppTheme.primary.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Text(
+                        '+221',
+                        style: TextStyle(
+                          color: AppTheme.primary,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    prefixIconConstraints: const BoxConstraints(),
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
@@ -93,6 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 const SizedBox(height: 32),
+
+                // Bouton
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -100,9 +166,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.primary,
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 17),
+                      elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     child: _isLoading
@@ -114,9 +181,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               strokeWidth: 2,
                             ),
                           )
-                        : const Text(
-                            'Continuer',
-                            style: TextStyle(fontSize: 16),
+                        : const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Continuer',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              FaIcon(FontAwesomeIcons.arrowRight, size: 14),
+                            ],
                           ),
                   ),
                 ),

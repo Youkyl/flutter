@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/theme/app_theme.dart';
 
 class QuickActions extends StatelessWidget {
@@ -19,18 +20,21 @@ class QuickActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _ActionButton(
-          icon: Icons.send,
+          icon: FontAwesomeIcons.paperPlane,
           label: 'Transférer',
+          color: AppTheme.primary,
           onTap: onTransfer,
         ),
         _ActionButton(
-          icon: Icons.receipt_long,
+          icon: FontAwesomeIcons.fileInvoiceDollar,
           label: 'Payer',
+          color: AppTheme.accent,
           onTap: onPay,
         ),
         _ActionButton(
-          icon: Icons.history,
+          icon: FontAwesomeIcons.clockRotateLeft,
           label: 'Historique',
+          color: const Color(0xFF8B5CF6),
           onTap: onHistory,
         ),
       ],
@@ -39,13 +43,15 @@ class QuickActions extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-  final IconData icon;
+  final FaIconData icon;
   final String label;
+  final Color color;
   final VoidCallback onTap;
 
   const _ActionButton({
     required this.icon,
     required this.label,
+    required this.color,
     required this.onTap,
   });
 
@@ -56,13 +62,19 @@ class _ActionButton extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 56,
-            height: 56,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
-              color: AppTheme.primary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(16),
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                color: color.withValues(alpha: 0.15),
+                width: 1,
+              ),
             ),
-            child: Icon(icon, color: AppTheme.primary, size: 26),
+            child: Center(
+              child: FaIcon(icon, color: color, size: 22),
+            ),
           ),
           const SizedBox(height: 8),
           Text(
