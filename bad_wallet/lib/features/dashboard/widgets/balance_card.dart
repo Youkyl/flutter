@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/app_theme.dart';
 
@@ -28,60 +29,135 @@ class _BalanceCardState extends State<BalanceCard> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [AppTheme.primary, Color(0xFF1557B0)],
+          colors: [Color(0xFF1A4FC7), Color(0xFF2D6BE4), Color(0xFF4C8EF7)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.primary.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            color: AppTheme.primary.withValues(alpha: 0.4),
+            blurRadius: 24,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header carte
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Solde disponible',
-                style: TextStyle(color: Colors.white70, fontSize: 14),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const FaIcon(
+                      FontAwesomeIcons.wallet,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'BadWallet',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
               GestureDetector(
                 onTap: () => setState(() => _isVisible = !_isVisible),
-                child: Icon(
-                  _isVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.white70,
-                  size: 20,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: FaIcon(
+                    _isVisible
+                        ? FontAwesomeIcons.eye
+                        : FontAwesomeIcons.eyeSlash,
+                    color: Colors.white,
+                    size: 14,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+
+          const SizedBox(height: 28),
+
+          // Label solde
           Text(
-            _isVisible ? _formattedBalance : '••••••',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 0.5,
+            'Solde disponible',
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.7),
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
             ),
           ),
+          const SizedBox(height: 8),
+
+          // Montant
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: _isVisible
+                ? Text(
+                    _formattedBalance,
+                    key: const ValueKey('visible'),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                    ),
+                  )
+                : const Text(
+                    '•••••• XOF',
+                    key: ValueKey('hidden'),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 4,
+                    ),
+                  ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Ligne séparatrice
+          Divider(color: Colors.white.withValues(alpha: 0.2), height: 1),
           const SizedBox(height: 16),
+
+          // Numéro de téléphone
           Row(
             children: [
-              const Icon(Icons.phone, color: Colors.white54, size: 14),
-              const SizedBox(width: 4),
+              const FaIcon(
+                FontAwesomeIcons.mobileScreenButton,
+                color: Colors.white60,
+                size: 13,
+              ),
+              const SizedBox(width: 8),
               Text(
-                '+221 ${widget.phone}',
-                style: const TextStyle(color: Colors.white70, fontSize: 13),
+                '+221 ${widget.phone.replaceFirst('+221', '')}',
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
