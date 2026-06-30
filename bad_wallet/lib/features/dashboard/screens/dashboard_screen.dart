@@ -8,6 +8,7 @@ import '../../auth/providers/auth_provider.dart';
 import '../../auth/screens/login_screen.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../transfers/screens/transfer_screen.dart';
+import '../../bills/screens/bills_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -100,7 +101,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       MaterialPageRoute(
                           builder: (_) => const TransferScreen()),
                     ),
-                    onPay: () {},
+                    onPay: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const BillsScreen()),
+                    ),
                     onHistory: () {},
                   ),
                   const SizedBox(height: 28),
