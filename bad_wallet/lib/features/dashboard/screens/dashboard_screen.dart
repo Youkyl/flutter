@@ -7,6 +7,7 @@ import '../widgets/transaction_tile.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../auth/screens/login_screen.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../transfers/screens/transfer_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -94,7 +95,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   BalanceCard(balance: wallet.balance, phone: phone),
                   const SizedBox(height: 28),
                   QuickActions(
-                    onTransfer: () {},
+                    onTransfer: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const TransferScreen()),
+                    ),
                     onPay: () {},
                     onHistory: () {},
                   ),
