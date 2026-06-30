@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
-    await context.read<AuthProvider>().savePhone(_phoneController.text.trim());
+    await context.read<AuthProvider>().savePhone('+221${_phoneController.text.trim()}');
     if (!mounted) return;
     setState(() => _isLoading = false);
     Navigator.pushReplacement(
